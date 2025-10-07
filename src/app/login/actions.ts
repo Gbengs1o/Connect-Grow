@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { redirect } from 'next/navigation';
 
-export async function login(prevState: { error: string } | null, formData: FormData) {
+export async function login(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
   const supabase = createClient();
@@ -15,7 +15,7 @@ export async function login(prevState: { error: string } | null, formData: FormD
   });
 
   if (error) {
-    return { error: 'Could not authenticate user. Please check your credentials.' };
+    return redirect('/login?message=Could not authenticate user. Please check your credentials.');
   }
 
   revalidatePath('/', 'layout');

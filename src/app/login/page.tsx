@@ -1,6 +1,5 @@
 'use client';
 
-import { useActionState } from 'react';
 import { useFormStatus } from 'react-dom';
 import { login } from './actions';
 import { Button } from '@/components/ui/button';
@@ -9,6 +8,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Church, LogIn } from 'lucide-react';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
 
 function SubmitButton() {
   const { pending } = useFormStatus();
@@ -21,7 +21,8 @@ function SubmitButton() {
 }
 
 export default function LoginPage() {
-  const [state, formAction] = useActionState(login, null);
+  const searchParams = useSearchParams();
+  const errorMessage = searchParams.get('message');
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-background">
@@ -34,7 +35,7 @@ export default function LoginPage() {
           <CardDescription>Enter your credentials to access the dashboard</CardDescription>
         </CardHeader>
         <CardContent>
-          <form action={formAction} className="space-y-4">
+          <form action={login} className="space-y-4">
             <div className="space-y-2">
               <Label htmlFor="email">Email</Label>
               <Input
@@ -49,8 +50,8 @@ export default function LoginPage() {
               <Label htmlFor="password">Password</Label>
               <Input id="password" type="password" name="password" required />
             </div>
-            {state?.error && (
-              <p className="text-sm font-medium text-destructive">{state.error}</p>
+            {errorMessage && (
+              <p className="text-sm font-medium text-destructive">{errorMessage}</p>
             )}
             <SubmitButton />
           </form>
