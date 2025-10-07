@@ -1,7 +1,7 @@
 import { createClient } from './supabase/server';
 import { subDays } from 'date-fns';
 import { unstable_noStore as noStore } from 'next/cache';
-import type { CommunicationLog, Visitor } from './types';
+import type { CommunicationLog, Staff, Visitor } from './types';
 
 export async function getDashboardStats() {
   noStore();
@@ -103,4 +103,35 @@ export async function getCommunicationsForVisitor(visitorId: string) {
       return [];
     }
     return data as CommunicationLog[];
-  }
+}
+
+export async function getStaffMember(userId: string) {
+    noStore();
+    const supabase = createClient();
+    const { data, error } = await supabase
+        .from('staff')
+        .select('*')
+        .eq('id', userId)
+        .single();
+    
+    if (error) {
+        // It's okay if a user is not in the staff table, so we don't log an error here.
+        return null;
+    }
+    return data as Staff;
+}
+
+export async function getAllStaff() {
+    noStore();
+    const supabase = createClient();
+    const { data, error } = await supabase
+        .from('staff')
+        .select('*')
+        .order('created_at', { ascending: false });
+
+    if (error) {
+        console.error('Error fetching all staff:', error);
+        return [];
+    }
+    return data as Staff[];
+}

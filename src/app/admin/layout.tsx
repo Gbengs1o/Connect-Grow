@@ -9,28 +9,39 @@ import {
   SidebarFooter,
   SidebarInset,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Users, LogOut } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, Shield } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createClient } from "@/lib/supabase/server";
 import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { signOut } from "./actions";
+import { getStaffMember } from "@/lib/data";
 
 export default async function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
-
   const supabase = createClient();
-  const { data: { user } } = await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
 
   if (!user) {
-    redirect('/login');
+    redirect("/login");
+  }
+  
+  const staffMember = await getStaffMember(user.id);
+  
+  if (!staffMember || staffMember.role === 'Pending') {
+    // Even if there is a user session, if they are not a valid staff member
+    // or are pending approval, sign them out and redirect to login.
+    await supabase.auth.signOut();
+    redirect('/login?message=Your account is pending approval or could not be verified.');
   }
 
-  const userInitial = user.email ? user.email.charAt(0).toUpperCase() : '?';
+  const userInitial = user.email ? user.email.charAt(0).toUpperCase() : "?";
 
   return (
     <SidebarProvider>
@@ -50,6 +61,13 @@ export default async function AdminLayout({
                 Visitors
               </SidebarMenuButton>
             </SidebarMenuItem>
+            {staffMember?.role === 'Admin' && (
+              <SidebarMenuItem>
+                <SidebarMenuButton href="/admin/staff" leftSlot={<Shield />}>
+                  Staff
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )}
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter className="flex items-center gap-3">
@@ -61,16 +79,19 @@ export default async function AdminLayout({
             <p className="text-sm font-medium truncate">{user.email}</p>
           </div>
           <form action={signOut}>
-            <Button variant="ghost" size="icon" type="submit" className="text-muted-foreground hover:text-foreground">
+            <Button
+              variant="ghost"
+              size="icon"
+              type="submit"
+              className="text-muted-foreground hover:text-foreground"
+            >
               <LogOut className="h-5 w-5" />
             </Button>
           </form>
         </SidebarFooter>
       </Sidebar>
       <SidebarInset>
-        <div className="min-h-screen">
-          {children}
-        </div>
+        <div className="min-h-screen">{children}</div>
       </SidebarInset>
     </SidebarProvider>
   );

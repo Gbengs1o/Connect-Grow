@@ -1,6 +1,7 @@
 export type VisitorStatus = "First Visit" | "Contacted" | "Second Visit" | "Regular" | "Inactive";
 export type ServiceType = "Sunday Service" | "Tuesday Bible Study";
 export type VisitSource = "In-Person" | "Online";
+export type StaffRole = 'Admin' | 'Follow-Up Team' | 'Pending';
 
 export interface Visitor {
   id: string;
@@ -18,7 +19,9 @@ export interface Visitor {
 export interface Staff {
   id: string;
   full_name: string | null;
-  role: string | null;
+  email: string;
+  role: StaffRole;
+  created_at: string;
 }
 
 export interface CommunicationLog {
