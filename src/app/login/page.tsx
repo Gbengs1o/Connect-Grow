@@ -54,8 +54,9 @@ export default function LoginPage() {
             <SubmitButton />
           </form>
            <div className="mt-4 text-center text-sm">
-            <Link href="/" className="underline">
-              Back to Home
+            Don&apos;t have an account?{' '}
+            <Link href="/admin-signup" className="underline">
+                Sign up
             </Link>
           </div>
         </CardContent>
