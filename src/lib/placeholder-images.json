@@ -1,3 +1,10 @@
 {
-  "placeholderImages": []
+  "placeholderImages": [
+    {
+      "id": "landing-hero",
+      "description": "A diverse group of smiling people in a modern church setting.",
+      "imageUrl": "https://picsum.photos/seed/church-hero/600/400",
+      "imageHint": "church community"
+    }
+  ]
 }
