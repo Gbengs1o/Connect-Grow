@@ -1,26 +1,36 @@
-import type { Metadata } from 'next';
-import './globals.css';
-import { Toaster } from '@/components/ui/toaster';
-import { cn } from '@/lib/utils';
+import type { Metadata } from "next";
+import { Alegreya, Belleza } from "next/font/google";
+import "./globals.css";
+import { Toaster } from "@/components/ui/toaster";
+import { cn } from "@/lib/utils";
+import { ReactNode } from "react";
+
+const alegreya = Alegreya({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-body",
+});
+
+const belleza = Belleza({
+  subsets: ["latin"],
+  display: "swap",
+  variable: "--font-headline",
+  weight: "400",
+});
 
 export const metadata: Metadata = {
-  title: 'Connect & Grow',
-  description: 'Church Visitor Follow-Up System',
+  title: "Connect & Grow",
+  description: "Building a stronger community, one visitor at a time.",
 };
 
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: React.ReactNode;
+  children: ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <head>
-        <link rel="preconnect" href="https://fonts.googleapis.com" />
-        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
-        <link href="https://fonts.googleapis.com/css2?family=Alegreya:ital,wght@0,400..900;1,400..900&family=Belleza&display=swap" rel="stylesheet" />
-      </head>
-      <body className={cn("font-body antialiased", "min-h-screen bg-background font-sans")}>
+    <html lang="en" className={cn(alegreya.variable, belleza.variable)}>
+      <body className="font-body">
         {children}
         <Toaster />
       </body>
