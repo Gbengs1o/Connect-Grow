@@ -9,7 +9,7 @@ import { useRef } from 'react';
 import { useFormStatus } from 'react-dom';
 import { updateVisitorStatus } from '../actions';
 
-const statusOptions: VisitorStatus[] = ["First Visit", "Contacted", "Second Visit", "Regular", "Inactive"];
+const statusOptions: VisitorStatus[] = ["First Visit", "Second Visit", "Integration", "Membership"];
 
 function SubmitButton() {
     const { pending } = useFormStatus();

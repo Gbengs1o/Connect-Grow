@@ -1,3 +1,5 @@
+// src/app/admin/layout.tsx - CORRECTED AND FULLY FUNCTIONAL
+
 import {
   SidebarProvider,
   Sidebar,
@@ -9,7 +11,7 @@ import {
   SidebarFooter,
   SidebarInset,
 } from "@/components/ui/sidebar";
-import { LayoutDashboard, Users, LogOut, Shield } from "lucide-react";
+import { LayoutDashboard, Users, LogOut, Shield, Clock, CheckSquare } from "lucide-react";
 import { Logo } from "@/components/Logo";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { createClient } from "@/lib/supabase/server";
@@ -17,6 +19,7 @@ import { redirect } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { signOut } from "./actions";
 import { getStaffMember } from "@/lib/data";
+import Link from "next/link";
 
 export default async function AdminLayout({
   children,
@@ -51,23 +54,61 @@ export default async function AdminLayout({
         </SidebarHeader>
         <SidebarContent>
           <SidebarMenu>
+
+            {/* --- CORRECTED DASHBOARD LINK --- */}
             <SidebarMenuItem>
-              <SidebarMenuButton href="/admin" leftSlot={<LayoutDashboard />}>
-                Dashboard
+              <SidebarMenuButton asChild>
+                <Link href="/admin" className="flex items-center gap-3">
+                  <LayoutDashboard className="h-5 w-5" />
+                  <span>Dashboard</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
+
+            {/* --- CORRECTED VISITORS LINK --- */}
             <SidebarMenuItem>
-              <SidebarMenuButton href="/admin/visitors" leftSlot={<Users />}>
-                Visitors
+              <SidebarMenuButton asChild>
+                <Link href="/admin/visitors" className="flex items-center gap-3">
+                  <Users className="h-5 w-5" />
+                  <span>Visitors</span>
+                </Link>
               </SidebarMenuButton>
             </SidebarMenuItem>
+
+            {/* --- ATTENDANCE LINK --- */}
+            <SidebarMenuItem>
+              <SidebarMenuButton asChild>
+                <Link href="/admin/attendance" className="flex items-center gap-3">
+                  <CheckSquare className="h-5 w-5" />
+                  <span>Attendance</span>
+                </Link>
+              </SidebarMenuButton>
+            </SidebarMenuItem>
+
+            {/* --- CORRECTED STAFF LINK --- */}
             {staffMember?.role === 'Admin' && (
               <SidebarMenuItem>
-                <SidebarMenuButton href="/admin/staff" leftSlot={<Shield />}>
-                  Staff
+                <SidebarMenuButton asChild>
+                  <Link href="/admin/staff" className="flex items-center gap-3">
+                    <Shield className="h-5 w-5" />
+                    <span>Staff</span>
+                  </Link>
                 </SidebarMenuButton>
               </SidebarMenuItem>
             )}
+
+            {/* --- SCHEDULING LINK --- */}
+            {staffMember?.role === 'Admin' && (
+              <SidebarMenuItem>
+                <SidebarMenuButton asChild>
+                  <Link href="/admin/scheduling" className="flex items-center gap-3">
+                    <Clock className="h-5 w-5" />
+                    <span>Scheduling</span>
+                  </Link>
+                </SidebarMenuButton>
+              </SidebarMenuItem>
+            )}
+
           </SidebarMenu>
         </SidebarContent>
         <SidebarFooter className="flex items-center gap-3">

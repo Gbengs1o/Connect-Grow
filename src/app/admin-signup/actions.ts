@@ -10,7 +10,7 @@ const signupFormSchema = z.object({
 });
 
 export async function signUpAction(data: z.infer<typeof signupFormSchema>) {
-  const supabase = createClient();
+  const supabase = await createClient();
   
   const validatedData = signupFormSchema.safeParse(data);
   if (!validatedData.success) {

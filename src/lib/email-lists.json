@@ -1,0 +1,26 @@
+{
+  "emailLists": [
+    {
+      "id": "pastors",
+      "name": "Pastors",
+      "emails": [
+        "pastor@innovastsolution.com"
+      ]
+    },
+    {
+      "id": "followup-team",
+      "name": "Follow-Up Team",
+      "emails": [
+        "followup@innovastsolution.com"
+      ]
+    },
+    {
+      "id": "leadership",
+      "name": "Leadership Team",
+      "emails": [
+        "davidogunkoya80@gmail.com",
+        "firewole8@gmail.com"
+      ]
+    }
+  ]
+}

@@ -4,7 +4,7 @@ import { createClient } from '@/lib/supabase/server';
 import { revalidatePath } from 'next/cache';
 import { z } from 'zod';
 
-const statusSchema = z.enum(["First Visit", "Contacted", "Second Visit", "Regular", "Inactive"]);
+const statusSchema = z.enum(["First Visit", "Second Visit", "Integration", "Membership"]);
 
 export async function updateVisitorStatus(visitorId: string, formData: FormData) {
   const supabase = createClient();

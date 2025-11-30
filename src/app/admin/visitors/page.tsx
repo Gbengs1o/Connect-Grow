@@ -49,7 +49,11 @@ export default async function VisitorsPage({
                   <TableCell>{visitor.email}</TableCell>
                   <TableCell>{format(new Date(visitor.visit_date), 'PPP')}</TableCell>
                   <TableCell>
-                  <Badge variant={visitor.status === 'First Visit' ? 'destructive' : 'secondary'} className="capitalize">
+                  <Badge variant={
+                      visitor.status === 'First Visit' ? 'destructive' : 
+                      visitor.status === 'Membership' ? 'default' : 
+                      'secondary'
+                    } className="capitalize">
                       {visitor.status}
                     </Badge>
                   </TableCell>

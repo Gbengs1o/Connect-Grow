@@ -8,6 +8,7 @@ import { Separator } from '@/components/ui/separator';
 import { StatusUpdateForm } from './components/StatusUpdateForm';
 import { FollowUpGenerator } from './components/FollowUpGenerator';
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@/components/ui/table';
+import { VisitorJourneyStepper } from '@/components/ui/visitor-journey-stepper';
 
 export default async function VisitorDetailPage({ params }: { params: { id: string } }) {
   const id = params.id;
@@ -41,10 +42,15 @@ export default async function VisitorDetailPage({ params }: { params: { id: stri
                 <CardHeader>
                 <CardTitle>Visitor Details</CardTitle>
                 <CardDescription>
-                    Current status: <Badge variant={visitor.status === 'First Visit' ? 'destructive' : 'secondary'} className="align-middle ml-1">{visitor.status}</Badge>
+                    Current status: <Badge variant={visitor.status === 'First Visit' ? 'destructive' : visitor.status === 'Membership' ? 'default' : 'secondary'} className="align-middle ml-1">{visitor.status}</Badge>
                 </CardDescription>
                 </CardHeader>
-                <CardContent className="space-y-4">
+                <CardContent className="space-y-6">
+                    {/* Journey Stepper */}
+                    <div className="py-4">
+                        <VisitorJourneyStepper currentStatus={visitor.status} />
+                    </div>
+                    <Separator />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
                         {detailItems.map(item => item.value && (
                             <div key={item.label} className="flex items-start gap-3">

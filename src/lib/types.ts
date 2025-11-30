@@ -1,4 +1,4 @@
-export type VisitorStatus = "First Visit" | "Contacted" | "Second Visit" | "Regular" | "Inactive";
+export type VisitorStatus = "First Visit" | "Second Visit" | "Integration" | "Membership";
 export type ServiceType = "Sunday Service" | "Tuesday Bible Study";
 export type VisitSource = "In-Person" | "Online";
 export type StaffRole = 'Admin' | 'Follow-Up Team' | 'Pending';

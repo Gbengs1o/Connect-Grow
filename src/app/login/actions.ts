@@ -7,7 +7,7 @@ import { redirect } from 'next/navigation';
 export async function login(formData: FormData) {
   const email = formData.get('email') as string;
   const password = formData.get('password') as string;
-  const supabase = createClient();
+  const supabase = await createClient();
 
   // Step 1: Authenticate the user
   const { data: authData, error: authError } = await supabase.auth.signInWithPassword({
