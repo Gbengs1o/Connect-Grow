@@ -26,7 +26,7 @@ export default async function AdminLayout({
 }: {
   children: React.ReactNode;
 }) {
-  const supabase = createClient();
+  const supabase = await createClient();
   const {
     data: { user },
   } = await supabase.auth.getUser();
@@ -34,9 +34,9 @@ export default async function AdminLayout({
   if (!user) {
     redirect("/login");
   }
-  
+
   const staffMember = await getStaffMember(user.id);
-  
+
   if (!staffMember || staffMember.role === 'Pending') {
     // Even if there is a user session, if they are not a valid staff member
     // or are pending approval, sign them out and redirect to login.
