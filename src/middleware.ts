@@ -44,7 +44,8 @@ export async function middleware(request: NextRequest) {
   }
 
   // If the user is NOT logged in and tries to access a protected admin page, redirect them.
-  if (!session && pathname.startsWith('/admin')) {
+  // We need to explicitly exclude /admin-signup because it starts with /admin
+  if (!session && pathname.startsWith('/admin') && !pathname.startsWith('/admin-signup')) {
     return NextResponse.redirect(new URL('/login', request.url))
   }
 
