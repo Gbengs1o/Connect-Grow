@@ -1,5 +1,6 @@
 'use client';
 
+import { Suspense } from 'react';
 import { useFormStatus } from 'react-dom';
 import { login } from './actions';
 import { Button } from '@/components/ui/button';
@@ -20,7 +21,7 @@ function SubmitButton() {
   );
 }
 
-export default function LoginPage() {
+function LoginForm() {
   const searchParams = useSearchParams();
   const errorMessage = searchParams.get('message');
 
@@ -64,5 +65,13 @@ export default function LoginPage() {
         </CardContent>
       </Card>
     </div>
+  );
+}
+
+export default function LoginPage() {
+  return (
+    <Suspense fallback={<div className="flex items-center justify-center min-h-screen">Loading...</div>}>
+      <LoginForm />
+    </Suspense>
   );
 }
